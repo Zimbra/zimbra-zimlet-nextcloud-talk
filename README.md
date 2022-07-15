@@ -17,5 +17,8 @@ The back-end for Zimbra Talk is not yet released, so you need to update it manua
 ```
 wget https://github.com/Zimbra/zm-nextcloud-extension/releases/download/9.0.0.p26/zm-nextcloud-extension.jar -O /opt/zimbra/lib/ext/nextcloud/zm-nextcloud-extension.jar
 su zimbra -
+cd /tmp
+wget https://github.com/Zimbra/zimbra-zimlet-nextcloud-talk/releases/download/0.0.1/zimbra-zimlet-nextcloud-talk.zip -O /tmp/zimbra-zimlet-nextcloud-talk.zip
+zmzimletctl deploy zimbra-zimlet-nextcloud-talk.zip
 zmmailboxdctl restart
 ```
