@@ -2,6 +2,10 @@
 	"zimbra-zimlet-nextcloud-talk": {
 		"title": "Nextcloud Talk",
 		"meetingTitle": "Zimbra"
-      }
+	},
+	"zimlet": {
+		"description": "Nextcloud Talk integration in Zimbra",
+		"label": "Nextcloud Talk Zimlet"
+	}
 }
 
