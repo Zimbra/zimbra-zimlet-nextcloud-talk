@@ -2,8 +2,8 @@
   "private": true,
   "name": "zimbra-zimlet-nextcloud-talk",
   "version": "1.0.0",
-  "license": "MIT",
-  "description": "TBD",
+  "license": "BSD-3",
+  "description": "Nextcloud Talk integration in Zimbra",
   "main": "build/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -25,15 +25,7 @@
     "extends": "eslint-config-synacor"
   },
   "devDependencies": {
-    "@zimbra/zimlet-cli": "^14.0.0",
-    "audit-ci": "^6.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-synacor": "^3.0.5",
-    "eslint-plugin-preact-i18n": "^1.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier-eslint": "^13.0.0"
+    "@zimbra/zimlet-cli": "^14.3.0"
   },
   "dependencies": {
     "@zimbra/oauth-client": "git+https://github.com/Zimbra/zm-x-oauth-client#nextcloud"
