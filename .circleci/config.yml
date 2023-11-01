@@ -57,6 +57,17 @@ jobs:
       resource_class: small
       <<: *checkout_job_steps
 
+   build_u22:
+      working_directory: ~/zimbra-zimlet-nextcloud-talk
+      shell: /bin/bash -eo pipefail
+      docker:
+         - image: $DOCKER_REGISTRY/zm-base-os:devcore-ubuntu-22.04
+           auth:
+            username: $DOCKER_USER
+            password: $DOCKER_PASS
+      resource_class: small
+      <<: *build_job_steps
+
    build_u20:
       working_directory: ~/zimbra-zimlet-nextcloud-talk
       shell: /bin/bash -eo pipefail
@@ -78,6 +89,17 @@ jobs:
       shell: /bin/bash -eo pipefail
       docker:
          - image: zimbra/zm-base-os:devcore-ubuntu-16.04
+      resource_class: small
+      <<: *build_job_steps
+
+   build_c9:
+      working_directory: ~/zimbra-zimlet-nextcloud-talk
+      shell: /bin/bash -eo pipefail
+      docker:
+         - image: $DOCKER_REGISTRY/zm-base-os:devcore-centos-9
+           auth:
+            username: $DOCKER_USER
+            password: $DOCKER_PASS
       resource_class: small
       <<: *build_job_steps
 
@@ -113,6 +135,11 @@ workflows:
          - checkout:
             requires:
               - build
+         - build_u22:
+            requires:
+               - checkout
+            context:
+               - docker-dev-registry
          - build_u20:
             requires:
                - checkout
@@ -122,6 +149,11 @@ workflows:
          - build_u16:
             requires:
                - checkout
+         - build_c9:
+            requires:
+               - checkout
+            context:
+               - docker-dev-registry
          - build_c8:
             requires:
                - checkout
@@ -132,9 +164,11 @@ workflows:
          - deploy_s3_hold:
             type: approval
             requires:
+               - build_u22
                - build_u20
                - build_u18
                - build_u16
+               - build_c9
                - build_c8
                - build_c7
 
