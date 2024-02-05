@@ -5,7 +5,7 @@ NAME = $(shell cat package.json | grep 'name":' | cut -c 12- | rev | cut -c 3- |
 DESC = $(shell cat package.json | grep 'description":' | cut -c 19- | rev | cut -c 3- | rev)
 VERSION = $(shell cat package.json | grep 'version":' | cut -c 15- | rev | cut -c 3- | rev)
 WORKSPACE = pkg
-ZIMBRA_ZIMLET_NEXTCLOUD_VERSION = 1.0.15
+ZIMBRA_ZIMLET_NEXTCLOUD_VERSION = 1.0.16
 
 .PHONY: clean all
 
