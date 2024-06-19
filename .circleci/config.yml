@@ -1,7 +1,4 @@
 version: 2.1
-orbs:
-  aws-s3: circleci/aws-s3@3.1.1
-
 ############################################################################
 
 references:
@@ -39,13 +36,14 @@ references:
       steps:
          - attach_workspace:
             at: ..
-         - aws-s3/sync:
-            from: 'build/'
-            to: 's3://files.zimbra.com/dev-releases/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM/archives/zimbra-zimlet-nextcloud-talk/'
-            aws-access-key-id: RELEASE_AWS_ACCESS_KEY_ID
-            aws-secret-access-key: RELEASE_AWS_SECRET_ACCESS_KEY
-            aws-region: RELEASE_AWS_DEFAULT_REGION
-
+         - run:
+             name: Create a zip file for artifacts and upload them to the OCI bucket
+             command: |
+               cd build/
+               zip -r $CIRCLE_PROJECT_REPONAME.zip .
+               ZIP_FILE_PATH="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM/archives/$CIRCLE_PROJECT_REPONAME.zip"
+               curl -X PUT "$OCI_PAR_URL$ZIP_FILE_PATH" -T $CIRCLE_PROJECT_REPONAME.zip
+               echo "artifacts uploaded to $ZIP_FILE_PATH"
 ############################################################################
 
 jobs:
@@ -174,6 +172,6 @@ workflows:
 
          - deploy_s3:
             context:
-               - aws
+               - oracle
             requires:
                - deploy_s3_hold
