@@ -93,14 +93,6 @@ jobs:
       resource_class: small
       <<: *build_job_steps
 
-   build_u16:
-      working_directory: ~/zimbra-zimlet-nextcloud-talk
-      shell: /bin/bash -eo pipefail
-      docker:
-         - image: zimbra/zm-base-os:devcore-ubuntu-16.04
-      resource_class: small
-      <<: *build_job_steps
-
    build_c9:
       working_directory: ~/zimbra-zimlet-nextcloud-talk
       shell: /bin/bash -eo pipefail
@@ -117,14 +109,6 @@ jobs:
       shell: /bin/bash -eo pipefail
       docker:
          - image: zimbra/zm-base-os:devcore-centos-8
-      resource_class: small
-      <<: *build_job_steps
-
-   build_c7:
-      working_directory: ~/zimbra-zimlet-nextcloud-talk
-      shell: /bin/bash -eo pipefail
-      docker:
-         - image: zimbra/zm-base-os:devcore-centos-7
       resource_class: small
       <<: *build_job_steps
 
@@ -160,18 +144,12 @@ workflows:
          - build_u18:
             requires:
                - checkout
-         - build_u16:
-            requires:
-               - checkout
          - build_c9:
             requires:
                - checkout
             context:
                - docker-dev-registry
          - build_c8:
-            requires:
-               - checkout
-         - build_c7:
             requires:
                - checkout
 
@@ -182,10 +160,8 @@ workflows:
                - build_u22
                - build_u20
                - build_u18
-               - build_u16
                - build_c9
                - build_c8
-               - build_c7
 
          - deploy_s3:
             context:
