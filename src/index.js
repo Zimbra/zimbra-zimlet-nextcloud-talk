@@ -1,10 +1,8 @@
 //Load components from Zimbra
-import { createElement } from "preact";
-import { provide } from 'preact-context-provider';
+import { createElement } from 'preact';
 
 //Load the createMore function from our Zimlet component
-import createMore from "./components/more";
-
+import CreateMore from './components/more';
 
 //Create function by Zimbra convention
 export default function Zimlet(context) {
@@ -12,11 +10,12 @@ export default function Zimlet(context) {
 	const { plugins } = context;
 	const exports = {};
 
-	exports.init = function init() {	
+	exports.init = function init() {
 		// The zimlet slots to load into, and what is being loaded into that slot
-		//Here we are using preact-context-provider to pass the Zimlet context to the createMore function which implements our Zimlet
-		//See: https://github.com/Zimbra/zimlet-cli/wiki/Zimlet-Context and https://github.com/synacor/preact-context-provider/
-		plugins.register('slot::calendar-appointment-edit-video-call', provide(context)(createMore));
+		// See: https://github.com/Zimbra/zimlet-cli/wiki/Zimlet-Context
+		plugins.register('slot::calendar-appointment-edit-video-call', props => (
+			<CreateMore {...props} context={context} />
+		));
 	};
 
 	return exports;
